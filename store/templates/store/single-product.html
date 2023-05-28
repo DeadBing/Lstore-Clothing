@@ -76,7 +76,11 @@
 							{{ form }}
                                 </div>
 							</div>
+                            {% if not request.user.is_authenticated %}
+                            <div class="button-add"><a href="{% url 'login' %}" class="btn btn-success">Добавить в корзину</a></div>
+                            {% else %}
                             <div class="button-add"><button type="submit" class="btn btn-success">Добавить в корзину</button></div>
+                            {% endif %}
                         </form>
                     </div>
                 </div>
