@@ -1,0 +1,88 @@
+{% extends 'store/base.html' %}
+
+
+{% block content %}
+
+    <section class="section single-p" id="product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                <div class="left-images">
+                    <div class="container py-2">
+    <div class="row align-items-center">
+        <div class="col-lg-8 offset-lg-2" id="slider">
+            <div id="myCarousel" class="carousel slide shadow">
+                <!-- main slider carousel items -->
+                <div class="carousel-inner">
+                    <div class="active carousel-item" data-slide-number="0">
+                        <img src="{{product.photo.url}}" class="img-fluid">
+                    </div>
+                    <div class="carousel-item" data-slide-number="1">
+                        <img src="{{product.photo2.url}}" class="img-fluid">
+                    </div>
+                    <div class="carousel-item" data-slide-number="2">
+                        <img src="{{product.photo3.url}}" class="img-fluid">
+                    </div>
+                    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+
+                </div>
+                <!-- main slider carousel nav controls -->
+
+
+                <ul class="carousel-indicators list-inline mx-auto border px-2">
+                    <li class="list-inline-item active d-flexx">
+                        <a id="carousel-selector-0" class="selected d-flexx" data-slide-to="0" data-target="#myCarousel">
+                            <img src="{{product.photo.url}}" class="img-fluid litimg">
+                        </a>
+                    </li>
+                    <li class="list-inline-item d-flexx">
+                        <a id="carousel-selector-1" class="d-flexx" data-slide-to="1" data-target="#myCarousel">
+                            <img src="{{product.photo2.url}}" class="img-fluid litimg">
+                        </a>
+                    </li>
+                    <li class="list-inline-item d-flexx">
+                        <a id="carousel-selector-2" class="d-flexx" data-slide-to="2" data-target="#myCarousel">
+                            <img src="{{product.photo3.url}}" class="img-fluid litimg">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!--/main slider carousel-->
+</div>
+
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="right-content">
+                    <h4>{{product.name}}</h4>
+                    <span class="price">{{product.price}} руб.</span>
+                    <span>Состав: {{product.materials}}</span>
+                    <span>{{product.description}}</span>
+                    <div class="total">
+                        <form action="{% url 'basket_add' product.pk %}" method="post">
+							<div>
+								{% csrf_token %}
+                                <div>
+							{{ form }}
+                                </div>
+							</div>
+                            <div class="button-add"><button type="submit" class="btn btn-success">Добавить в корзину</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
