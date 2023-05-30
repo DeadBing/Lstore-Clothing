@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -8,7 +9,7 @@ from .models import *
 from .utils import *
 from .forms import *
 from basket.forms import *
-
+from order.models import *
 
 
 class Main(CategoryMixin, ListView):
@@ -102,3 +103,14 @@ class Registration(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('home')
+
+@login_required
+def profile(request):
+    user_orders = Order.objects.filter(customer=request.user)
+    user_order_item = OrderItem.objects.all()
+
+    data = {
+        'user_orders': user_orders,
+        'user_order_item': user_order_item,
+    }
+    return render(request, 'store/profile.html', data)

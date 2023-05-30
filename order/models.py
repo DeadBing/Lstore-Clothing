@@ -1,17 +1,19 @@
+from django.contrib.auth.models import User
 from django.db import models
 from store.models import *
 
 
 class Order(models.Model):
-    first_name = models.CharField(max_length=100 )
-    last_name = models.CharField(max_length=100)
-    street = models.CharField(max_length=20)
-    house = models.CharField(max_length=20)
-    city = models.CharField(max_length=20)
-    region = models.CharField(max_length=20)
-    index = models.CharField(max_length=12)
-    country = models.CharField(max_length=20)
-    comment = models.TextField(max_length=200, null=True)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders', verbose_name='Заказы')
+    first_name = models.CharField(max_length=100, verbose_name='Имя')
+    last_name = models.CharField(max_length=100, verbose_name='Фамилия')
+    street = models.CharField(max_length=20, verbose_name='Улица')
+    house = models.CharField(max_length=20, verbose_name='Дом')
+    city = models.CharField(max_length=20, verbose_name='Город')
+    region = models.CharField(max_length=20, verbose_name='Область')
+    index = models.CharField(max_length=12, verbose_name='Индекс')
+    country = models.CharField(max_length=20, verbose_name='Страна')
+    comment = models.TextField(max_length=200, null=True, verbose_name='Комментарий')
     updated = models.DateTimeField(auto_now=True)
 
 

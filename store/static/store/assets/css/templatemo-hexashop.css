@@ -53,6 +53,10 @@ figure, header, nav, section, article, aside, footer, figcaption {
   height: 0;
 }
 
+.successful-order {
+    margin-top: 8%;
+}
+
 .top-mg {
     margin-top: 50px;
 }
