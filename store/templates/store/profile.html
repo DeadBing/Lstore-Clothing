@@ -1,0 +1,20 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<section class="section" id="products">
+        <div class="container successful-order">
+{% if user_orders %}
+    <p>{{customer.name}}</p>
+    {% for o in user_orders %}
+    <p>{{o.id}}</p>
+    {% for item in user_order_item %}
+    {% if item.order.id == o.id %}
+    <p>{{item.product.name}}</p>
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+{% endif %}
+        </div>
+</section>
+{% endblock %}
