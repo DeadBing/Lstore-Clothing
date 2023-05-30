@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 from store.models import Product
@@ -26,7 +27,7 @@ def basket_remove(request, did):
     basket.remove(product)
     return redirect('basket_detail')
 
-
+@login_required
 def basket_detail(request):
     basket = Basket(request)
     return render(request, 'basket/detail.html', {'basket': basket})

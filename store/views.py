@@ -105,12 +105,13 @@ class Registration(CreateView):
         return redirect('home')
 
 @login_required
-def profile(request):
-    user_orders = Order.objects.filter(customer=request.user)
-    user_order_item = OrderItem.objects.all()
-
-    data = {
-        'user_orders': user_orders,
-        'user_order_item': user_order_item,
-    }
-    return render(request, 'store/profile.html', data)
+def profile(request, username):
+        user = request.user
+        user_orders = Order.objects.filter(customer=request.user)
+        user_order_item = OrderItem.objects.all()
+        data = {
+            'user': user,
+            'user_orders': user_orders,
+            'user_order_item': user_order_item,
+        }
+        return render(request, 'store/profile.html', data)

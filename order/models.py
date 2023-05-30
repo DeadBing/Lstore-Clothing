@@ -5,6 +5,7 @@ from store.models import *
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders', verbose_name='Заказы')
+    time_create = models.DateField(auto_now_add=True, null=True)
     first_name = models.CharField(max_length=100, verbose_name='Имя')
     last_name = models.CharField(max_length=100, verbose_name='Фамилия')
     street = models.CharField(max_length=20, verbose_name='Улица')
