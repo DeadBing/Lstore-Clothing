@@ -14,7 +14,7 @@ class Order(models.Model):
     region = models.CharField(max_length=20, verbose_name='Область')
     index = models.CharField(max_length=12, verbose_name='Индекс')
     country = models.CharField(max_length=20, verbose_name='Страна')
-    comment = models.TextField(max_length=200, null=True, verbose_name='Комментарий')
+    phone_number = models.TextField(max_length=200, null=True, verbose_name='Номер телефона')
     updated = models.DateTimeField(auto_now=True)
 
 
