@@ -34,7 +34,8 @@ class ShowCategory(CategoryMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        category_mixin = self.get_user_context(title="Главная страница")
+        category_mixin = self.get_user_context()
+        context['title'] = 'Категория: ' + str(Category.objects.get(id=self.kwargs['cid']))
         context = dict(list(context.items()) + list(category_mixin.items()))
         return context
 
@@ -50,7 +51,8 @@ class ProductDetail(CategoryMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = AddBasketForm()
-        category_mixin = self.get_user_context(title="Главная страница")
+        category_mixin = self.get_user_context()
+        context['title'] = Product.objects.get(id=self.kwargs['did'])
         context = dict(list(context.items()) + list(category_mixin.items()))
         return context
 
@@ -58,26 +60,31 @@ class ProductDetail(CategoryMixin, ListView):
         return Product.objects.get(id=self.kwargs['did'])
 
 
-class Search(ListView):
+class Search(ListView, CategoryMixin):
     template_name = 'store/search.html'
     context_object_name = 'product'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['title'] = 'Поиск'
+        category_mixin = self.get_user_context()
         context['q'] = self.request.GET.get('q')
+        context = dict(list(context.items()) + list(category_mixin.items()))
         return context
 
     def get_queryset(self):
         return Product.objects.filter(name__iregex=self.request.GET.get('q'))
 
 
-class Login(LoginView):
+class Login(LoginView, CategoryMixin):
     form_class = LoginUserForm
     template_name = 'store/login.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        category_mixin = self.get_user_context()
         context['title'] = "Авторизация"
+        context = dict(list(context.items()) + list(category_mixin.items()))
         return context
 
     def get_success_url(self):
@@ -87,13 +94,15 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-class Registration(CreateView):
+class Registration(CreateView, CategoryMixin):
     form_class = RegisterUserForm
     template_name = 'store/register.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = "Регистрация"
+        category_mixin = self.get_user_context()
+        context = dict(list(context.items()) + list(category_mixin.items()))
         return context
 
     def get_success_url(self):
@@ -107,11 +116,14 @@ class Registration(CreateView):
 @login_required
 def profile(request, username):
         user = request.user
-        user_orders = Order.objects.filter(customer=request.user)
+        user_orders = reversed(Order.objects.filter(customer=request.user))
         user_order_item = OrderItem.objects.all()
+        categorys = Category.objects.all()
         data = {
             'user': user,
             'user_orders': user_orders,
             'user_order_item': user_order_item,
+            'title': 'Профиль',
+            'categorys': categorys,
         }
         return render(request, 'store/profile.html', data)

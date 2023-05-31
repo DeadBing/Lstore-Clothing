@@ -4,6 +4,7 @@ from django.views.decorators.http import require_POST
 from store.models import Product
 from .basket import Basket
 from .forms import *
+from store.models import *
 
 
 @require_POST
@@ -30,6 +31,7 @@ def basket_remove(request, did):
 @login_required
 def basket_detail(request):
     basket = Basket(request)
-    return render(request, 'basket/detail.html', {'basket': basket})
+    categorys = Category.objects.all()
+    return render(request, 'basket/detail.html', {'basket': basket, 'title': 'Корзина', 'categorys': categorys})
 
 
