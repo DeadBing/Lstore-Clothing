@@ -95,6 +95,33 @@ figure, header, nav, section, article, aside, footer, figcaption {
     border-top: 1px solid #f2f5f9;
 }
 
+.favorites-a-added {
+    color: red;
+}
+
+.favorites-a-added:hover {
+    color: black;
+}
+
+.favorites-a-not-added {
+    color: black;
+}
+
+.favorite {
+    padding-top: 10px;
+}
+
+.span-fav {
+    font-family: 'Poppins', sans-serif;
+    display: inline !important;
+    color: black !important;
+    font-size: 16px !important;
+}
+
+.favorites-a-not-added:hover {
+    color: red;
+}
+
 .success-order {
     display: flex;
     height: 100px;
@@ -103,6 +130,11 @@ figure, header, nav, section, article, aside, footer, figcaption {
 
 .btn-success {
     width: 200px;
+}
+
+.basket-menu {
+    position: absolute;
+    top: -3px;
 }
 
 .e6r {

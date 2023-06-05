@@ -11,4 +11,7 @@ urlpatterns = [
     path('register/', Registration.as_view(), name='register'),
     path('logout/', logout_view, name='logout'),
     path('profile/<username>', profile, name='profile'),
+    path('product/<int:did>/add_to_favorite/', AddToFavoriteView.as_view(), name='add_to_favorite'),
+    path('product/<int:did>/remove_from_favorite/', RemoveFromFavoriteView.as_view(), name='remove_from_favorite'),
+    path('favorites/', favorite_details, name='favorites'),
 ]

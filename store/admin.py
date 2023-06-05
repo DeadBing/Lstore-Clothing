@@ -13,6 +13,8 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
 
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'product')
 
 class SizeAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
@@ -20,4 +22,5 @@ class SizeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Favorite, FavoriteAdmin)
 admin.site.register(Category, CategoryAdmin)

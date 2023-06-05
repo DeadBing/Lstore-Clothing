@@ -4,6 +4,7 @@ from django.contrib.auth.views import LoginView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import logout
+from django.views import View
 from django.views.generic import ListView, CreateView
 from .models import *
 from .utils import *
@@ -42,6 +43,31 @@ class ShowCategory(CategoryMixin, ListView):
     def get_queryset(self):
         return Product.objects.filter(category=self.kwargs['cid'])
 
+
+class AddToFavoriteView(View):
+    def get(self, request, did, *args, **kwargs):
+        product = get_object_or_404(Product, pk=did)
+        favorite, created = Favorite.objects.get_or_create(user=request.user, product=product)
+        return redirect('detail', did=did)
+
+
+def favorite_details(request):
+    user = request.user
+    user_favorites = reversed(Favorite.objects.filter(user=request.user))
+    categorys = Category.objects.all()
+    context = {
+        'user': user,
+        'user_favorites': user_favorites,
+        'title': 'Избранное',
+        'categorys': categorys,
+    }
+    return render(request, 'store/favorite_detail.html', context)
+
+class RemoveFromFavoriteView(View):
+    def get(self, request, did, *args, **kwargs):
+        product = get_object_or_404(Product, pk=did)
+        Favorite.objects.filter(user=request.user, product=product).delete()
+        return redirect('detail', did=did)
 
 class ProductDetail(CategoryMixin, ListView):
     model = Product

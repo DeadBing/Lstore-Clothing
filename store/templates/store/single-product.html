@@ -1,6 +1,6 @@
 {% extends 'store/base.html' %}
-
-
+{% load static %}
+{% load favorite_tags %}
 {% block content %}
 
     <section class="section single-p" id="product">
@@ -65,6 +65,17 @@
             <div class="col-lg-4">
                 <div class="right-content">
                     <h4>{{product.name}}</h4>
+                    <div class="favorite">
+                        {% if user.is_authenticated %}
+                            {% if product|is_favorite:user %}
+                                <a class="favorites-a-added" href="{% url 'remove_from_favorite' product.id %}"><i class="fa fa-heart" aria-hidden="true"><span class="span-fav"> Убрать из избранного</span></i></a>
+                            {% else %}
+                                <a class="favorites-a-not-added" href="{% url 'add_to_favorite' product.id %}"><i class="fa fa-heart-o" aria-hidden="true"><span class="span-fav"> Добавить в избранное</span></i></a>
+                            {% endif %}
+                        {% else %}
+                            <p>Для добавления в избранное необходимо <a href="{% url 'login' %}">войти в систему</a>.</p>
+                        {% endif %}
+                    </div>
                     <span class="price">{{product.price}} руб.</span>
                     <span>Состав: {{product.materials}}</span>
                     <span>{{product.description}}</span>
