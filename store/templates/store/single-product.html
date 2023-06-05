@@ -73,7 +73,7 @@
                                 <a class="favorites-a-not-added" href="{% url 'add_to_favorite' product.id %}"><i class="fa fa-heart-o" aria-hidden="true"><span class="span-fav"> Добавить в избранное</span></i></a>
                             {% endif %}
                         {% else %}
-                            <p>Для добавления в избранное необходимо <a href="{% url 'login' %}">войти в систему</a>.</p>
+                                <a class="favorites-a-not-added" href="{% url 'login' %}"><i class="fa fa-heart-o" aria-hidden="true"><span class="span-fav"> Добавить в избранное</span></i></a>
                         {% endif %}
                     </div>
                     <span class="price">{{product.price}} руб.</span>

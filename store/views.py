@@ -50,7 +50,7 @@ class AddToFavoriteView(View):
         favorite, created = Favorite.objects.get_or_create(user=request.user, product=product)
         return redirect('detail', did=did)
 
-
+@login_required
 def favorite_details(request):
     user = request.user
     user_favorites = reversed(Favorite.objects.filter(user=request.user))

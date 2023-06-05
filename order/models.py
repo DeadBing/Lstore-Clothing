@@ -24,6 +24,10 @@ class Order(models.Model):
     def get_total_cost(self):
         return sum(item.get_cost() for item in self.items.all())
 
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.PROTECT, verbose_name='Отношение к заказу')
@@ -32,6 +36,9 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField(default=1, verbose_name='Количество')
     size = models.CharField(max_length=3, verbose_name='Размер', default='XS')
 
+    class Meta:
+        verbose_name = 'Заказанный товар'
+        verbose_name_plural = 'Заказанные товары'
 
     def __int__(self):
         return self.pk

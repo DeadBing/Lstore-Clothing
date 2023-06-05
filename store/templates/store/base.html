@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
+    <link rel="icon" href="{% static 'store/assets/images/favicon.png' %}" type="image/x-icon">
     <title>{{title}}</title>
 
 
@@ -40,7 +40,7 @@
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="{% url 'home'  %}">Главная</a></li>
                             <li class="submenu">
-                                <a href="javascript:;">Мужское</a>
+                                <a href="javascript:;">Категории</a>
                                 <ul>
                                     {% for c in categorys %}
                                     <li><a href="{{c.get_absolute_url}}">{{c.name}}</a></li>
@@ -78,7 +78,11 @@
                                 </div>
                             </li>
                             <li>
+                                {% if request.user.is_authenticated %}
                                 <a href="{% url 'favorites' %}"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                                {% else %}
+                                <a href="{% url 'login' %}"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                                {% endif %}
                             </li>
                             <li>
                                 {% if not request.user.is_authenticated %}

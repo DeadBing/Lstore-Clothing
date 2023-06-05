@@ -137,6 +137,18 @@ figure, header, nav, section, article, aside, footer, figcaption {
     top: -3px;
 }
 
+.favorites-page {
+    padding-top: 100px;
+}
+
+.favorites-header {
+    padding-top: 125px;
+}
+
+.favorites-h {
+    text-align: center;
+}
+
 .e6r {
     color: #001a34;
     font-size: 16px;
