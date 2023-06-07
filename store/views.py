@@ -54,10 +54,12 @@ class AddToFavoriteView(View):
 def favorite_details(request):
     user = request.user
     user_favorites = reversed(Favorite.objects.filter(user=request.user))
+    user_favorites_length = Favorite.objects.filter(user=request.user)
     categorys = Category.objects.all()
     context = {
         'user': user,
         'user_favorites': user_favorites,
+        'user_favorites_length': user_favorites_length,
         'title': 'Избранное',
         'categorys': categorys,
     }

@@ -28,4 +28,4 @@ def order_create(request):
 
 
 def order_created(request):
-    return render(request, 'order/created.html', {'categorys': Category.objects.all()})
+    return render(request, 'order/created.html', {'categorys': Category.objects.all(), 'title': "Заказ"})

@@ -6,7 +6,7 @@
         <h2 class="favorites-h">Избранное</h2>
     </div>
     <section class="section" id="products">
-        {% if user_favorites|length == 0 %}
+        {% if user_favorites_length|length == 0 %}
                         <div class="basket-error">
                             <h1 class="h-basket-error">Здесь пока ничего нет...</h1>
                             <a href="{% url 'home' %}" class="btn btn-success"><span class="glyphicon glyphicon-arrow-left"></span>Главная</a>

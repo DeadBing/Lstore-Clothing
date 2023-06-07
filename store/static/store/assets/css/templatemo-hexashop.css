@@ -137,6 +137,14 @@ figure, header, nav, section, article, aside, footer, figcaption {
     top: -3px;
 }
 
+.order-span {
+    font-size: 14px;
+    color: #aaaaaa;
+    font-weight: 500;
+    display: block;
+    margin-top: 25px;
+}
+
 .favorites-page {
     padding-top: 100px;
 }
