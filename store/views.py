@@ -79,6 +79,8 @@ class ProductDetail(CategoryMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = AddBasketForm()
+        context['form_review'] = ReviewForm()
+        context['reviews'] = Review.objects.filter(product=Product.objects.get(id=self.kwargs['did']))
         category_mixin = self.get_user_context()
         context['title'] = Product.objects.get(id=self.kwargs['did'])
         context = dict(list(context.items()) + list(category_mixin.items()))
@@ -86,6 +88,21 @@ class ProductDetail(CategoryMixin, ListView):
 
     def get_queryset(self):
         return Product.objects.get(id=self.kwargs['did'])
+
+class AddReviewView(View):
+    def get(self, request, did):
+        form = ReviewForm()
+        return render(request, 'store/single-product.html', {'form': form})
+
+    def post(self, request, did):
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            product = Product.objects.get(id=did)
+            text = form.cleaned_data['text']
+            review = Review.objects.create(user=user, product=product, text=text)
+            return redirect('detail', did=did)
+        return render(request, 'store/single-product.html', {'form': form})
 
 
 class Search(ListView, CategoryMixin):

@@ -48,3 +48,14 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('category', kwargs={'cid': self.pk})
 
+class Review(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    text = models.TextField()
+    time_create = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
+
+

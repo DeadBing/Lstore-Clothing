@@ -14,4 +14,5 @@ urlpatterns = [
     path('product/<int:did>/add_to_favorite/', AddToFavoriteView.as_view(), name='add_to_favorite'),
     path('product/<int:did>/remove_from_favorite/', RemoveFromFavoriteView.as_view(), name='remove_from_favorite'),
     path('favorites/', favorite_details, name='favorites'),
+    path('add_review/<int:did>/', login_required(AddReviewView.as_view()), name='add_review')
 ]

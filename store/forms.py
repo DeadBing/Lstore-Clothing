@@ -27,3 +27,7 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ['username', 'email']
+
+
+class ReviewForm(forms.Form):
+    text = forms.CharField(label="Отзыв", widget=forms.Textarea(attrs={"class":"form-control"}))

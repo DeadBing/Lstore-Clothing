@@ -96,6 +96,47 @@
                     </div>
                 </div>
             </div>
+                <div class="review">
+                    <span class="review-span">Отзывы о товаре</span>
+                    {% for review in reviews %}
+                    <div class="review-detail">
+                      <div class="review-info">
+                          <div class="tf1">
+                              <div class="mf1">
+                              <p class="tf2">Автор: {{ review.user.username }}</p>
+                              </div>
+                              <div class="t3f">
+                              <span>Дата создания: {{ review.time_create }}</span>
+                              </div>
+                          </div>
+                      </div>
+                          <div class="order-details">
+                              <div class="re9">
+                              <p class="e88">Комментарий</p>
+                              <p class="e6r">{{ review.text }}</p>
+                              </div>
+                          </div>
+                      </div>
+                    {% empty %}
+                <div class="no-reviews">
+                    <h2>Отзывов пока нет</h2>
+                </div>
+                    {% endfor %}
+                    </div>
+                <div class="create-review">
+                        <span class="red">Добавить отзыв</span>
+                    <div class="review-submit">
+                        <form action="{% url 'add_review' product.id %}" method="post">
+                          {% csrf_token %}
+                            <p class="txr">
+                          {{ form_review }}
+                            </p>
+                            <div class="review-submit-button">
+                          <button type="submit" class="btn btn-success">Опубликовать</button>
+                            </div>
+                        </form>
+                        </div>
+                </div>
             </div>
         </div>
     </section>
