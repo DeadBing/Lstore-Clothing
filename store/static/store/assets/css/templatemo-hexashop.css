@@ -90,7 +90,7 @@ figure, header, nav, section, article, aside, footer, figcaption {
 .review-submit-button {
     margin-top: 16px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .order-info {

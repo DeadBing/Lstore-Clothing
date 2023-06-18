@@ -43,7 +43,6 @@ class ShowCategory(CategoryMixin, ListView):
     def get_queryset(self):
         return Product.objects.filter(category=self.kwargs['cid'])
 
-
 class AddToFavoriteView(View):
     def get(self, request, did, *args, **kwargs):
         product = get_object_or_404(Product, pk=did)
@@ -80,7 +79,7 @@ class ProductDetail(CategoryMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['form'] = AddBasketForm()
         context['form_review'] = ReviewForm()
-        context['reviews'] = Review.objects.filter(product=Product.objects.get(id=self.kwargs['did']))
+        context['reviews'] = reversed(Review.objects.filter(product=Product.objects.get(id=self.kwargs['did'])))
         category_mixin = self.get_user_context()
         context['title'] = Product.objects.get(id=self.kwargs['did'])
         context = dict(list(context.items()) + list(category_mixin.items()))
@@ -172,3 +171,5 @@ def profile(request, username):
             'categorys': categorys,
         }
         return render(request, 'store/profile.html', data)
+
+

@@ -8,7 +8,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     materials = models.CharField(max_length=100)
-    price = models.IntegerField( null=True)
+    price = models.IntegerField(null=True)
     photo = models.ImageField(upload_to="photos/%Y/%m/%d", null=True)
     photo2 = models.ImageField(upload_to="photos/%Y/%m/%d", null=True)
     photo3 = models.ImageField(upload_to="photos/%Y/%m/%d", null=True)

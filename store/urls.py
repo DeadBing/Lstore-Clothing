@@ -1,5 +1,4 @@
 from django.urls import path
-
 from .views import *
 
 urlpatterns = [
@@ -16,3 +15,5 @@ urlpatterns = [
     path('favorites/', favorite_details, name='favorites'),
     path('add_review/<int:did>/', login_required(AddReviewView.as_view()), name='add_review')
 ]
+
+
