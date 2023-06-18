@@ -2,6 +2,14 @@ from decimal import Decimal
 from django.conf import settings
 from store.models import Product
 
+SIZES = [
+    ('XS', 'XS'),
+    ('S', 'S'),
+    ('M', 'M'),
+    ('L', 'L'),
+    ('XL', 'XL'),
+]
+
 
 class Basket(object):
 
@@ -14,36 +22,36 @@ class Basket(object):
 
     def add(self, product, quantity=1, size='XS', update_quantity=False, update_size=False):
         product_id = str(product.id)
-        if product_id not in self.basket:
-            self.basket[product_id] = {'quantity': 0,
-                                     'size': ' ',
-                                     'price': str(product.price)}
+        key = f"{product_id}_{size}"
+        if key not in self.basket:
+            self.basket[key] = {'quantity': 0,
+                                'size': size,
+                                'price': str(product.price)}
         if update_quantity:
-            self.basket[product_id]['quantity'] = quantity
+            self.basket[key]['quantity'] = quantity
         else:
-            self.basket[product_id]['quantity'] += quantity
+            self.basket[key]['quantity'] += quantity
 
         if update_size:
-            self.basket[product_id]['size'] = size
-        else:
-            self.basket[product_id]['size'] = size
+            self.basket[key]['size'] = size
+
         self.save()
 
-    def save(self):
-        self.session[settings.BASKET_SESSION_ID] = self.basket
-        self.session.modified = True
-
-    def remove(self, product):
+    def remove(self, product, size='XS'):
         product_id = str(product.id)
-        if product_id in self.basket:
-            del self.basket[product_id]
+        key = f"{product_id}_{size}"
+        if key in self.basket:
+            del self.basket[key]
             self.save()
 
     def __iter__(self):
-        product_ids = self.basket.keys()
+        product_ids = [key.split('_')[0] for key in self.basket.keys()]
         products = Product.objects.filter(id__in=product_ids)
         for product in products:
-            self.basket[str(product.id)]['product'] = product
+            for size in SIZES:
+                key = f"{str(product.id)}_{size[0]}"
+                if key in self.basket:
+                    self.basket[key]['product'] = product
         for item in self.basket.values():
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
@@ -53,9 +61,11 @@ class Basket(object):
         return sum(item['quantity'] for item in self.basket.values())
 
     def get_total_price(self):
+        return sum(Decimal(item['price']) * item['quantity'] for item in self.basket.values())
 
-        return sum(Decimal(item['price']) * item['quantity'] for item in
-                   self.basket.values())
+    def save(self):
+        self.session[settings.BASKET_SESSION_ID] = self.basket
+        self.session.modified = True
 
     def clear(self):
         del self.session[settings.BASKET_SESSION_ID]
