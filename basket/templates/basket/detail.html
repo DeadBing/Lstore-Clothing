@@ -41,7 +41,7 @@
                                     <td>{{b.product.price}} руб.</td>
                                     <td>{% widthratio b.product.price 1 b.quantity %} руб.</td>
                                     <td>
-                                          <form action="{% url 'basket_remove' b.product.pk %}" method="post">
+                                          <form action="{% url 'basket_remove' b.product.pk  b.size %}" method="post">
                                                           <div>
                                                               {% csrf_token %}
                                                           {{ AddBasketForm }}

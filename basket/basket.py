@@ -37,7 +37,7 @@ class Basket(object):
 
         self.save()
 
-    def remove(self, product, size='XS'):
+    def remove(self, product, size):
         product_id = str(product.id)
         key = f"{product_id}_{size}"
         if key in self.basket:

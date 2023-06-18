@@ -22,10 +22,10 @@ def basket_add(request, did):
     return redirect('basket_detail')
 
 
-def basket_remove(request, did):
+def basket_remove(request, did, size):
     basket = Basket(request)
     product = get_object_or_404(Product, id=did)
-    basket.remove(product)
+    basket.remove(product, size)
     return redirect('basket_detail')
 
 @login_required
